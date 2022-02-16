@@ -15,11 +15,15 @@ export class CreateUserService {
   async execute(data: UserRequest): Promise<User> {
     const { name, email, admin } = data
 
-    if (!email) throw new Error('Email incorrect')
+    if (!email){
+      throw new Error('Email incorrect')
+    }
 
     const userAlreadyExists = await this.userRepository.findOne({ email })
 
-    if (userAlreadyExists) throw new Error('User already exists')
+    if (userAlreadyExists) {
+      throw new Error('User already exists')
+    }
 
     const user = this.userRepository.create({ name, email, admin })
 
@@ -28,4 +32,3 @@ export class CreateUserService {
     return user
   }
 }
-
